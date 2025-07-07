@@ -1,0 +1,1522 @@
+/* Certificate Carousel Stylesheet
+ * Description: Professional responsive styles for certificate carousel component
+ * Version: 2.0
+ */
+
+:root {
+  /* Core brand colors from main CSS */
+  --certificate-primary: #191970; /* Midnight Blue */
+  --certificate-primary-light: #2a2a9a;
+  --certificate-primary-dark: #0f0f45;
+  --certificate-accent: #ffd700; /* Gold */
+  --certificate-accent-light: #ffe347;
+  --certificate-accent-dark: #e6c200;
+
+  /* UI colors */
+  --certificate-bg-light: #f8f9fa;
+  --certificate-bg-gradient: linear-gradient(135deg, #f8fbff 0%, #eef3ff 100%);
+  --certificate-card-bg: #ffffff;
+  --certificate-text: #333333;
+  --certificate-text-light: #666666;
+  --certificate-text-dark: #111111;
+  --certificate-border: #e0e6f5;
+  --certificate-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --certificate-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --certificate-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+
+  /* Typography */
+  --certificate-font-primary: "Inter", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  --certificate-font-secondary: "Poppins", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+
+  /* Transitions */
+  --certificate-transition-fast: 0.2s ease;
+  --certificate-transition-normal: 0.3s ease;
+  --certificate-transition-slow: 0.5s ease;
+
+  /* Spacing */
+  --certificate-spacing-xs: 0.25rem;
+  --certificate-spacing-sm: 0.5rem;
+  --certificate-spacing-md: 1rem;
+  --certificate-spacing-lg: 2rem;
+  --certificate-spacing-xl: 4rem;
+
+  /* Border radius */
+  --certificate-radius-sm: 4px;
+  --certificate-radius-md: 8px;
+  --certificate-radius-lg: 16px;
+  --certificate-radius-full: 9999px;
+}
+
+/* ===== Global Reset & Base Styles ===== */
+.certificate-component * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.certificate-component {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  color: var(--certificate-text);
+  background: var(--certificate-bg-light);
+  width: 100%;
+}
+
+/* ===== Main Container Structure ===== */
+.certificate {
+  margin-top: 80px; /* Space for fixed header */
+  padding: var(--certificate-spacing-lg) var(--certificate-spacing-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  font-family: var(--certificate-font-primary);
+}
+
+.certificate-content-wrapper {
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+/* ===== Carousel Structure ===== */
+.carousel {
+  width: 100%;
+  max-width: 1000px;
+  margin: var(--certificate-spacing-lg) auto;
+  position: relative;
+  overflow: visible;
+}
+
+.carousel-track-container {
+  overflow: hidden;
+  border-radius: var(--certificate-radius-md);
+  box-shadow: var(--certificate-shadow-md);
+  background-color: var(--certificate-card-bg);
+  border: 1px solid var(--certificate-border);
+  transition: box-shadow var(--certificate-transition-normal);
+}
+
+.carousel-track-container:hover {
+  box-shadow: var(--certificate-shadow-lg);
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform var(--certificate-transition-slow);
+  min-height: 500px;
+  will-change: transform;
+}
+
+/* ===== Slide Structure ===== */
+.carousel-slide {
+  min-width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: var(--certificate-spacing-lg);
+  box-sizing: border-box;
+  gap: var(--certificate-spacing-lg);
+}
+
+/* ===== Certificate Image Container ===== */
+.certificate-image-container {
+  width: 50%;
+  padding: var(--certificate-spacing-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: linear-gradient(
+    45deg,
+    rgba(25, 25, 112, 0.1),
+    var(--certificate-bg-light)
+  );
+  border-radius: var(--certificate-radius-md);
+  overflow: hidden;
+  box-shadow: var(--certificate-shadow-sm);
+}
+
+.certificate-image {
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: var(--certificate-radius-sm);
+  box-shadow: var(--certificate-shadow-sm);
+  transition: transform var(--certificate-transition-normal),
+    box-shadow var(--certificate-transition-normal);
+  transform-origin: center;
+  border: 1px solid var(--certificate-border);
+}
+
+.certificate-image-container:hover .certificate-image {
+  transform: scale(1.02);
+  box-shadow: var(--certificate-shadow-md);
+}
+
+/* Image aspect ratio handling with improved styling */
+.certificate-image.portrait {
+  max-height: 400px;
+  width: auto;
+}
+
+.certificate-image.landscape {
+  max-width: 100%;
+  height: auto;
+}
+
+.certificate-image.square {
+  max-width: 350px;
+  max-height: 350px;
+}
+
+/* Image loading state with smooth transitions */
+.certificate-image.loading {
+  opacity: 0.5;
+  filter: blur(2px);
+}
+
+.certificate-image.loaded {
+  opacity: 1;
+  filter: blur(0);
+  transition: opacity var(--certificate-transition-normal),
+    filter var(--certificate-transition-normal);
+}
+
+/* Image controls with improved styling */
+.image-controls {
+  position: absolute;
+  bottom: var(--certificate-spacing-md);
+  right: var(--certificate-spacing-md);
+  display: flex;
+  gap: var(--certificate-spacing-sm);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--certificate-transition-normal),
+    transform var(--certificate-transition-normal);
+}
+
+.certificate-image-container:hover .image-controls {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.zoom-btn {
+  background-color: var(--certificate-primary);
+  color: white;
+  border: none;
+  border-radius: var(--certificate-radius-full);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color var(--certificate-transition-fast),
+    transform var(--certificate-transition-fast);
+  box-shadow: var(--certificate-shadow-sm);
+  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+.zoom-btn:hover {
+  background-color: var(--certificate-primary-light);
+  transform: scale(1.1);
+}
+
+/* ===== Certificate Info ===== */
+.certificate-info {
+  width: 50%;
+  padding: var(--certificate-spacing-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  background: var(--certificate-card-bg);
+  border-left: 4px solid var(--certificate-accent);
+  border-radius: 0 var(--certificate-radius-md) var(--certificate-radius-md) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative accent element */
+.certificate-info::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--certificate-accent), transparent);
+  opacity: 0.7;
+}
+
+.certificate-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--certificate-primary);
+  margin-bottom: var(--certificate-spacing-md);
+  line-height: 1.3;
+  width: 100%;
+  position: relative;
+  padding-bottom: var(--certificate-spacing-sm);
+  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+.certificate-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background-color: var(--certificate-accent);
+  border-radius: var(--certificate-radius-full);
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--certificate-spacing-md);
+  font-size: 0.95rem;
+  color: var(--certificate-text-light);
+  width: 100%;
+  padding: var(--certificate-spacing-sm) 0;
+  border-bottom: 1px solid var(--certificate-border);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+/* Description container with improved styling */
+.description-container {
+  position: relative;
+  margin-top: var(--certificate-spacing-md);
+  max-height: 300px;
+  overflow: hidden;
+  width: 100%;
+  background-color: var(--certificate-bg-light);
+  padding: var(--certificate-spacing-md);
+  border-radius: var(--certificate-radius-md);
+  border: 1px solid var(--certificate-border);
+}
+
+.description {
+  line-height: 1.6;
+  margin-bottom: var(--certificate-spacing-sm);
+  color: var(--certificate-text);
+  text-align: left;
+  font-size: 0.95rem;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+.description-short {
+  display: block;
+}
+
+.description-full {
+  display: none;
+}
+
+/* Fade effect for description overflow */
+.description-container::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background: linear-gradient(to top, var(--certificate-bg-light), transparent);
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.toggle-description {
+  background: none;
+  border: none;
+  color: var(--certificate-primary);
+  font-weight: 600;
+  cursor: pointer;
+  padding: var(--certificate-spacing-xs) var(--certificate-spacing-sm);
+  font-size: 0.9rem;
+  margin-top: var(--certificate-spacing-sm);
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  transition: color var(--certificate-transition-fast),
+    transform var(--certificate-transition-fast);
+  border-radius: var(--certificate-radius-sm);
+  background-color: rgba(25, 25, 112, 0.1);
+  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+.toggle-description:hover {
+  color: var(--certificate-primary-light);
+  transform: translateX(2px);
+}
+
+.toggle-description::after {
+  content: "→";
+  margin-left: var(--certificate-spacing-xs);
+  transition: transform var(--certificate-transition-fast);
+}
+
+.toggle-description:hover::after {
+  transform: translateX(2px);
+}
+
+/* ===== Carousel Navigation ===== */
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--certificate-primary);
+  border: none;
+  color: var(--certificate-accent);
+  font-size: 1.5rem;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  z-index: 100;
+  transition: all var(--certificate-transition-normal);
+  border-radius: var(--certificate-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--certificate-shadow-md);
+  opacity: 0.9;
+}
+
+.carousel-arrow:hover {
+  background-color: var(--certificate-primary-light);
+  transform: translateY(-50%) scale(1.1);
+  opacity: 1;
+}
+
+.carousel-arrow:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.carousel-prev {
+  left: -25px;
+}
+
+.carousel-next {
+  right: -25px;
+}
+
+/* Arrow icons with CSS */
+.carousel-prev::before,
+.carousel-next::before {
+  content: "";
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-style: solid;
+  border-width: 3px 3px 0 0;
+  border-color: var(--certificate-accent);
+}
+
+.carousel-prev::before {
+  transform: rotate(-135deg);
+  margin-left: 4px;
+}
+
+.carousel-next::before {
+  transform: rotate(45deg);
+  margin-right: 4px;
+}
+
+/* Dot navigation with improved styling */
+.carousel-nav {
+  display: flex;
+  justify-content: center;
+  gap: var(--certificate-spacing-sm);
+  margin-top: var(--certificate-spacing-md);
+}
+
+.carousel-nav button {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--certificate-radius-full);
+  background-color: var(--certificate-primary);
+  border: none;
+  cursor: pointer;
+  transition: all var(--certificate-transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-nav button.active {
+  background-color: var(--certificate-accent) !important;
+  transform: scale(1.2);
+}
+
+.carousel-nav button:hover {
+  background-color: var(--certificate-primary-light);
+  transform: scale(1.1);
+}
+
+/* Ripple effect for dot navigation */
+.carousel-nav button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+.carousel-nav button:active::after {
+  width: 120%;
+  height: 120%;
+  opacity: 1;
+  transition: width 0.3s ease-out, height 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+/* ===== Certificate Counter ===== */
+.certificate-counter {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--certificate-spacing-sm);
+  font-size: 0.9rem;
+  color: var(--certificate-text-light);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  padding: var(--certificate-spacing-xs) var(--certificate-spacing-md);
+  background-color: rgba(25, 25, 112, 0.05);
+  border-radius: var(--certificate-radius-full);
+}
+
+.certificate-counter .current {
+  font-weight: 700;
+  color: var(--certificate-primary);
+  margin: 0 var(--certificate-spacing-xs);
+}
+
+.certificate-counter .total {
+  margin: 0 var(--certificate-spacing-xs);
+}
+
+.certificate-counter .separator {
+  margin: 0 var(--certificate-spacing-xs);
+  color: var(--certificate-accent);
+  font-weight: 700;
+}
+
+/* ===== Mobile Controls Container ===== */
+.carousel-controls-container {
+  display: none;
+  width: 100%;
+  padding: var(--certificate-spacing-md) 0;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--certificate-bg-light);
+  border-top: 1px solid var(--certificate-border);
+  border-bottom: 1px solid var(--certificate-border);
+}
+
+/* ===== Zoom Modal ===== */
+.zoom-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(10, 10, 40, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--certificate-transition-normal);
+  backdrop-filter: blur(5px);
+}
+
+.zoom-modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.zoom-modal img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  box-shadow: var(--certificate-shadow-lg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--certificate-radius-sm);
+  transform: scale(0.95);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.4s ease;
+}
+
+.zoom-modal.active img {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.zoom-modal .close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(25, 25, 112, 0.5);
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--certificate-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--certificate-transition-fast);
+}
+
+.zoom-modal .close-btn:hover {
+  background: var(--certificate-primary);
+}
+
+/* Modify carousel arrows when inside zoom modal */
+.zoom-modal .carousel-arrow {
+  /* Adjust position for zoom modal context */
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1010; /* Higher z-index in modal */
+
+  /* Adjust styling for zoom modal */
+  background: rgba(25, 25, 112, 0.5);
+  color: white;
+  border: none;
+  width: 50px;
+  height: 50px;
+
+  /* Keep consistent styling */
+  border-radius: var(--certificate-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--certificate-shadow-md);
+}
+
+/* Adjust hover states for zoom modal arrows */
+.zoom-modal .carousel-arrow:hover {
+  background: var(--certificate-primary);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.zoom-modal .carousel-arrow:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Adjust arrow colors for zoom modal */
+.zoom-modal .carousel-prev::before,
+.zoom-modal .carousel-next::before {
+  border-color: white;
+}
+
+/* Adjust positioning for zoom modal */
+.zoom-modal .carousel-prev {
+  left: 20px;
+}
+
+.zoom-modal .carousel-next {
+  right: 20px;
+}
+
+/* ===== Search and Filter Controls ===== */
+.certificate-controls {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto var(--certificate-spacing-lg);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--certificate-spacing-md);
+  align-items: center;
+  background-color: var(--certificate-card-bg);
+  padding: var(--certificate-spacing-md);
+  border-radius: var(--certificate-radius-md);
+  box-shadow: var(--certificate-shadow-sm);
+  border: 1px solid var(--certificate-border);
+}
+
+.search-container {
+  flex: 1;
+  min-width: 250px;
+  position: relative;
+}
+
+.search-container input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border: 1px solid var(--certificate-border);
+  border-radius: var(--certificate-radius-md);
+  font-size: 1rem;
+  transition: border-color var(--certificate-transition-fast),
+    box-shadow var(--certificate-transition-fast);
+  background-color: var(--certificate-bg-light);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+.search-container input:focus {
+  outline: none;
+  border-color: var(--certificate-primary-light);
+  box-shadow: 0 0 0 3px rgba(25, 25, 112, 0.1);
+}
+
+.search-container svg {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--certificate-text-light);
+  transition: color var(--certificate-transition-fast);
+}
+
+.search-container input:focus + svg {
+  color: var(--certificate-primary);
+}
+
+.filter-container {
+  display: flex;
+  gap: var(--certificate-spacing-sm);
+  flex-wrap: wrap;
+}
+
+.filter-select {
+  padding: 0.75rem;
+  border: 1px solid var(--certificate-border);
+  border-radius: var(--certificate-radius-md);
+  background-color: var(--certificate-bg-light);
+  min-width: 150px;
+  transition: border-color var(--certificate-transition-fast),
+    box-shadow var(--certificate-transition-fast);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2.5rem;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: var(--certificate-primary-light);
+  box-shadow: 0 0 0 3px rgba(25, 25, 112, 0.1);
+}
+
+/* ===== Error and Loading States ===== */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  width: 100%;
+  gap: var(--certificate-spacing-md);
+  background-color: var(--certificate-bg-light);
+  border-radius: var(--certificate-radius-md);
+  border: 1px solid var(--certificate-border);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(25, 25, 112, 0.1);
+  border-top: 4px solid var(--certificate-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  box-shadow: 0 0 10px rgba(25, 25, 112, 0.1);
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.error,
+.no-results {
+  text-align: center;
+  padding: var(--certificate-spacing-lg);
+  background-color: var(--certificate-bg-light);
+  border-radius: var(--certificate-radius-md);
+  margin: var(--certificate-spacing-lg) auto;
+  max-width: 600px;
+  width: 100%;
+  border: 1px solid var(--certificate-border);
+  box-shadow: var(--certificate-shadow-sm);
+}
+
+.retry-btn,
+.reset-btn {
+  margin-top: var(--certificate-spacing-md);
+  padding: 0.5rem 1rem;
+  background-color: var(--certificate-primary);
+  color: white;
+  border: none;
+  border-radius: var(--certificate-radius-md);
+  cursor: pointer;
+  transition: background-color var(--certificate-transition-fast),
+    transform var(--certificate-transition-fast);
+  font-weight: 500;
+  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+.retry-btn:hover,
+.reset-btn:hover {
+  background-color: var(--certificate-primary-light);
+  transform: translateY(-2px);
+}
+
+.retry-btn:active,
+.reset-btn:active {
+  transform: translateY(0);
+}
+
+/* Add swipe education overlay for mobile - KEEPING THIS AS REQUESTED */
+.swipe-hint {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 400px;
+  background-color: var(--certificate-primary);
+  color: white;
+  padding: 12px 20px;
+  border-radius: var(--certificate-radius-md);
+  text-align: center;
+  z-index: 100;
+  box-shadow: var(--certificate-shadow-md);
+  opacity: 0;
+  pointer-events: none;
+  animation: fadeInOut 4s forwards;
+}
+
+.swipe-hint-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.swipe-arrow {
+  font-size: 1.2rem;
+  animation: arrowPulse 1.5s infinite;
+}
+
+.swipe-arrow-left {
+  animation-delay: 0s;
+}
+
+.swipe-arrow-right {
+  animation-delay: 0.75s;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  15% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  85% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+}
+
+@keyframes arrowPulse {
+  0% {
+    opacity: 0.5;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(3px);
+  }
+  100% {
+    opacity: 0.5;
+    transform: translateX(0);
+  }
+}
+
+/* Add prefers-reduced-motion media query */
+@media (prefers-reduced-motion: reduce) {
+  .carousel-track,
+  .certificate-image,
+  .image-controls,
+  .carousel-arrow,
+  .carousel-nav button,
+  .zoom-modal img,
+  .retry-btn,
+  .reset-btn,
+  .toggle-description {
+    transition: none !important;
+  }
+
+  .carousel-arrow:hover {
+    transform: translateY(-50%);
+  }
+
+  .swipe-arrow,
+  .loading-spinner {
+    animation: none !important;
+  }
+
+  @keyframes fadeInOut {
+    0% {
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+}
+
+/* ===== Tablet Styles (768px - 1024px) ===== */
+@media (max-width: 1024px) {
+  .certificate {
+    padding: var(--certificate-spacing-md) var(--certificate-spacing-sm);
+  }
+
+  .carousel-slide {
+    padding: var(--certificate-spacing-md);
+    gap: var(--certificate-spacing-md);
+  }
+
+  .certificate-title {
+    font-size: 1.3rem;
+  }
+
+  .description {
+    font-size: 0.9rem;
+  }
+
+  .carousel-arrow {
+    width: 45px;
+    height: 45px;
+  }
+
+  .carousel-prev {
+    left: -22px;
+  }
+
+  .carousel-next {
+    right: -22px;
+  }
+
+  .certificate-counter {
+    font-size: 0.85rem;
+  }
+}
+
+/* ===== Mobile Styles (< 768px) ===== */
+@media (max-width: 767px) {
+  .certificate {
+    padding: var(--certificate-spacing-md) var(--certificate-spacing-sm);
+    margin-top: 60px;
+  }
+
+  /* REMOVING ARROW BUTTONS ON MOBILE AS REQUESTED */
+  .carousel-arrow {
+    display: none !important;
+  }
+
+  /* Strict vertical stack with improved spacing */
+  .carousel-slide {
+    flex-direction: column;
+    padding: 0 0 var(--certificate-spacing-md) 0;
+    gap: var(--certificate-spacing-md);
+  }
+
+  /* Full-bleed images with better mobile styling */
+  .certificate-image-container {
+    width: 100%;
+    border-radius: var(--certificate-radius-md) var(--certificate-radius-md) 0 0;
+    padding: var(--certificate-spacing-md);
+    margin-bottom: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(25, 25, 112, 0.1),
+      var(--certificate-bg-light)
+    );
+  }
+
+  .certificate-image {
+    width: 100%;
+    max-height: 300px;
+    border-radius: var(--certificate-radius-sm);
+  }
+
+  /* Adjust info section for mobile with better styling */
+  .certificate-info {
+    width: 100%;
+    border-left: none;
+    border-top: 4px solid var(--certificate-accent);
+    border-radius: 0 0 var(--certificate-radius-md) var(--certificate-radius-md)
+      0;
+    margin-top: 0;
+    padding: var(--certificate-spacing-md);
+    box-shadow: none;
+  }
+
+  .certificate-title {
+    font-size: 1.3rem;
+    width: 100%;
+  }
+
+  .meta {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: var(--certificate-spacing-xs);
+  }
+
+  /* Update the description container for mobile */
+  .description-container {
+    width: 100%;
+    max-height: none; /* Remove fixed height constraint */
+    overflow: visible; /* Allow content to flow naturally */
+  }
+
+  /* Remove the fade effect on mobile */
+  .description-container::after {
+    display: none;
+  }
+
+  /* Ensure the toggle button is visible and works properly */
+  .toggle-description {
+    display: inline-flex;
+    margin-top: var(--certificate-spacing-md);
+    padding: var(--certificate-spacing-sm) var(--certificate-spacing-md);
+    background-color: var(--certificate-primary);
+    color: white;
+    border-radius: var(--certificate-radius-md);
+    font-weight: 500;
+    align-self: center;
+    width: auto;
+    font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+  }
+
+  .toggle-description:hover {
+    background-color: var(--certificate-primary-light);
+    color: white;
+  }
+
+  /* Adjust description text for better readability on mobile */
+  .description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: var(--certificate-spacing-md);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+  }
+
+  /* Ensure proper display of short/full descriptions */
+  .description-short {
+    display: block;
+  }
+
+  .description-full {
+    display: none;
+  }
+
+  /* When expanded class is present */
+  .description-container.expanded .description-short {
+    display: none;
+  }
+
+  .description-container.expanded .description-full {
+    display: block;
+  }
+
+  /* Show swipe hint on mobile - KEEPING THIS AS REQUESTED */
+  .swipe-hint {
+    display: block;
+  }
+
+  /* Adjust touch-action for mobile optimization */
+  .carousel-track {
+    touch-action: pan-y;
+  }
+
+  /* Ensure controls container appears after image but before info */
+  .carousel-controls-container {
+    order: 1;
+    display: flex;
+    margin-bottom: var(--certificate-spacing-sm);
+  }
+
+  /* Move dot navigation to bottom with better spacing */
+  .carousel-nav {
+    margin-top: var(--certificate-spacing-lg);
+    margin-bottom: var(--certificate-spacing-md);
+  }
+
+  /* Adjust certificate counter for mobile */
+  .certificate-counter {
+    font-size: 0.8rem;
+    padding: var(--certificate-spacing-xs) var(--certificate-spacing-md);
+    margin-top: var(--certificate-spacing-xs);
+    width: auto;
+    display: inline-flex;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    justify-content: center;
+  }
+
+  /* Adjust search and filter for mobile */
+  .certificate-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--certificate-spacing-sm);
+    padding: var(--certificate-spacing-sm);
+  }
+
+  .search-container,
+  .filter-container {
+    width: 100%;
+  }
+
+  .filter-container {
+    flex-direction: column;
+  }
+
+  /* Touch hint for mobile */
+  .touch-hint {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    text-align: center;
+    padding: var(--certificate-spacing-xs) 0;
+    color: var(--certificate-text-light);
+  }
+}
+
+/* ===== Landscape Mode on Mobile ===== */
+@media (max-width: 767px) and (orientation: landscape) {
+  .carousel-slide {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--certificate-spacing-md);
+    padding: var(--certificate-spacing-md);
+  }
+
+  .certificate-image-container,
+  .certificate-info {
+    width: 50%;
+    border-radius: var(--certificate-radius-md);
+  }
+
+  .certificate-image-container {
+    margin-bottom: 0;
+    border-radius: var(--certificate-radius-md);
+  }
+
+  .certificate-info {
+    border-top: none;
+    border-left: 4px solid var(--certificate-accent);
+    height: 100%;
+  }
+
+  /* Adjust image size for landscape */
+  .certificate-image {
+    max-height: 250px;
+  }
+
+  /* Position counter for landscape mode */
+  .certificate-counter {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(25, 25, 112, 0.1);
+  }
+}
+
+/* ===== Accessibility ===== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Focus styles for better accessibility */
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+[tabindex]:focus {
+  outline: 3px solid rgba(25, 25, 112, 0.2);
+  outline-offset: 2px;
+}
+
+/* High contrast mode improvements */
+@media (forced-colors: active) {
+  .carousel-arrow,
+  .carousel-nav button,
+  .toggle-description,
+  .retry-btn,
+  .reset-btn,
+  .zoom-btn {
+    border: 2px solid currentColor;
+  }
+
+  .certificate-image {
+    border: 2px solid currentColor;
+  }
+
+  .certificate-counter {
+    border: 1px solid currentColor;
+  }
+}
+
+/* ===== Print Styles ===== */
+@media print {
+  .certificate {
+    margin: 0;
+    padding: 0.5cm;
+  }
+
+  .carousel-track-container {
+    overflow: visible;
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+
+  .carousel-track {
+    display: block;
+    transform: none !important;
+  }
+
+  .carousel-slide {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin-bottom: 1cm;
+    border-bottom: 1px solid #000;
+    padding-bottom: 1cm;
+  }
+
+  .certificate-image-container,
+  .certificate-info {
+    width: 100%;
+    max-width: 100%;
+    padding: 0.5cm;
+  }
+
+  .certificate-image {
+    max-height: 10cm;
+    border: 1px solid #000;
+  }
+
+  .carousel-arrow,
+  .carousel-nav,
+  .image-controls,
+  .toggle-description,
+  .swipe-hint,
+  .certificate-controls,
+  .certificate-counter {
+    display: none !important;
+  }
+
+  .description-short {
+    display: none !important;
+  }
+
+  .description-full {
+    display: block !important;
+  }
+
+  .description-container::after {
+    display: none;
+  }
+}
+
+/* ===== Dark Mode Support with Enhanced Gold Styling ===== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Deep, luxurious gold palette */
+    --certificate-primary: #a67c00; /* Deeper, richer gold base color */
+    --certificate-primary-light: #d4af37; /* Rich gold */
+    --certificate-primary-dark: #704700; /* Dark amber gold */
+    --certificate-primary-highlight: #f9df85; /* Light gold for accents */
+
+    --certificate-accent: #191970; /* Midnight Blue in dark mode */
+    --certificate-accent-light: #2a2a9a;
+    --certificate-accent-dark: #0f0f45;
+    --certificate-card-bg: #1e1e1e;
+    --certificate-bg-light: #121212;
+    --certificate-bg-gradient: linear-gradient(
+      135deg,
+      #121212 0%,
+      #1a1a2e 100%
+    );
+    --certificate-text: #ffffff; /* White text in dark mode */
+    --certificate-text-light: #cccccc;
+    --certificate-text-dark: #ffffff;
+    --certificate-border: #333333;
+    --certificate-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+    --certificate-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3);
+    --certificate-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.4);
+
+    /* Gold gradients for dark mode */
+    --gold-gradient: linear-gradient(
+      135deg,
+      #704700 0%,
+      #a67c00 20%,
+      #d4af37 40%,
+      #f9df85 50%,
+      #d4af37 60%,
+      #a67c00 80%,
+      #704700 100%
+    );
+
+    --gold-gradient-simple: linear-gradient(
+      135deg,
+      #704700,
+      #a67c00,
+      #d4af37,
+      #f9df85
+    );
+  }
+
+  /* Add subtle gold shimmer effect to certificate title */
+  .certificate-title {
+    background: var(--gold-gradient-simple);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent !important;
+    animation: goldShimmer 8s linear infinite;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Add subtle glitter effect to certificate title */
+  .certificate-title::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(
+        circle at 20% 30%,
+        rgba(249, 223, 133, 0.7) 0.1%,
+        transparent 0.5%
+      ),
+      radial-gradient(
+        circle at 50% 70%,
+        rgba(249, 223, 133, 0.5) 0.1%,
+        transparent 0.5%
+      ),
+      radial-gradient(
+        circle at 80% 10%,
+        rgba(249, 223, 133, 0.7) 0.1%,
+        transparent 0.5%
+      ),
+      radial-gradient(
+        circle at 10% 90%,
+        rgba(249, 223, 133, 0.5) 0.1%,
+        transparent 0.5%
+      );
+    background-size: 150% 150%;
+    mix-blend-mode: overlay;
+    animation: glitterEffect 6s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* Enhanced gold gradients for navigation buttons */
+  .carousel-arrow,
+  .retry-btn,
+  .reset-btn,
+  .zoom-btn,
+  .toggle-description {
+    background: var(--gold-gradient);
+    background-size: 200% 200%;
+    animation: goldWave 12s ease infinite;
+  }
+
+  /* Style certificate counter for dark mode */
+  .certificate-counter {
+    background-color: rgba(166, 124, 0, 0.2);
+  }
+
+  .certificate-counter .current {
+    color: var(--certificate-primary-light);
+  }
+
+  .certificate-counter .separator {
+    color: var(--certificate-accent-light);
+  }
+
+  /* Add gold glow to interactive elements */
+  .carousel-arrow:hover,
+  .retry-btn:hover,
+  .reset-btn:hover,
+  .zoom-btn:hover,
+  .toggle-description:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 15px rgba(166, 124, 0, 0.2);
+  }
+
+  /* Enhanced gold accents */
+  .certificate-title::after,
+  .certificate-info::before {
+    background: var(--gold-gradient-simple);
+    background-size: 200% 200%;
+    animation: goldShimmer 8s linear infinite;
+  }
+
+  /* Adjust image container background in dark mode */
+  .certificate-image-container {
+    background: linear-gradient(
+      45deg,
+      rgba(166, 124, 0, 0.1),
+      var(--certificate-bg-light)
+    );
+  }
+
+  /* Fix the See more button in dark mode to use gold gradient text instead of button */
+  .toggle-description {
+    background: transparent !important;
+    background-size: 200% 200% !important;
+    background-clip: text !important;
+    -webkit-background-clip: text !important;
+    color: transparent !important;
+    border-radius: 0 !important;
+    padding: 0.25rem 0 !important;
+    text-decoration: underline !important;
+    background-image: var(--gold-gradient-simple) !important;
+    animation: goldShimmer 8s linear infinite !important;
+  }
+
+  .toggle-description:hover {
+    text-decoration: underline !important;
+    box-shadow: none !important;
+    opacity: 0.9 !important;
+  }
+
+  .toggle-description::after {
+    background-image: var(--gold-gradient-simple) !important;
+    background-clip: text !important;
+    -webkit-background-clip: text !important;
+    color: transparent !important;
+  }
+
+  /* Also fix the specific "See more" link that might be using different styling */
+  a.toggle-description,
+  .description-container a,
+  a.see-more,
+  .see-more {
+    background: transparent !important;
+    background-image: var(--gold-gradient-simple) !important;
+    background-size: 200% 200% !important;
+    background-clip: text !important;
+    -webkit-background-clip: text !important;
+    color: transparent !important;
+    border-radius: 0 !important;
+    padding: 0.25rem 0 !important;
+    text-decoration: underline !important;
+    display: inline !important;
+    animation: goldShimmer 8s linear infinite !important;
+  }
+}
+
+/* Add gold effect animations if they don't exist */
+@keyframes goldShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes goldWave {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes glitterEffect {
+  0% {
+    background-position: 0% 0%;
+  }
+  25% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+@media (max-width: 767px) {
+  .certificate-counter {
+    position: relative !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+  }
+}
